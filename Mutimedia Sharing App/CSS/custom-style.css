@@ -1,0 +1,214 @@
+/* Global style optimization: Soft background and consistent spacing */
+body {
+    background-color: #f8f9fa; /* Light gray background for overall page */
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.5;
+}
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* 1. Header Section: Light blue to highlight title */
+.header-section {
+    background-color: #e8f4f8;
+    border-radius: 10px;
+    padding: 25px 0;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.header-section h3 {
+    color: #2d3748;
+    font-weight: 600;
+    margin: 0 0 8px 0; 
+}
+
+.header-description {
+    color: #4a5568; 
+    font-size: 14px; 
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* 2. Upload Section (Admin Only): Light green to indicate operation area */
+#uploadSection {
+    background-color: #f0f8fb;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: none; /* Keep original hidden state */
+}
+#uploadSection p {
+    color: #2d3748;
+    font-weight: 600;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 8px;
+}
+/* Optimize form input style in upload section */
+#newAssetForm .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+#newAssetForm .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    outline: none;
+}
+/* Button group to keep Submit and Logout aligned */
+.button-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.button-group .btn-danger {
+    margin-left: auto;
+}
+
+/* 3. View Asset Area (All Users): Light purple for core content area */
+.view-asset-area {
+    background-color: #faf6ed;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.view-asset-area .control-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+/* Optimize search input style */
+#searchInput {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+}
+#searchInput:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    outline: none;
+}
+
+/* 4. Admin Login Section (Bottom): Light gray to avoid distraction */
+#adminLoginSection {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 40px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+#adminLoginSection p {
+    color: #2d3748;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+#adminLoginSection .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+}
+
+/* Media Card Optimization: Enhance hover effect */
+.media-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background: #fff;
+    transition: all 0.3s ease;
+}
+.media-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.media-thumb {
+    width: 100%;
+    height: 180px;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.media-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.media-card:hover .media-thumb img {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+.media-body {
+    padding: 12px 14px;
+    font-size: 13px;
+}
+.media-title {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #2d3748;
+    word-break: break-word;
+}
+
+/* Button Style Optimization: More distinct colors */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 6px;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    border-radius: 6px;
+}
+.btn-secondary:hover {
+    background-color: #545b62;
+    border-color: #545b62;
+}
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    border-radius: 6px;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+
+/* Image error message style */
+.image-error {
+    color: #dc3545;
+    font-size: 12px;
+    padding: 8px 12px 0;
+    display: none;
+}
+
+/* Video link style optimization */
+.video-link {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 6px;
+    background: #e8f4f8;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.video-link:hover {
+    background: #d1e7dd;
+    color: #0056b3;
+    text-decoration: none;
+}

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" ng-app="Dashboard">
+<head>
+    <meta charset="UTF-8">
+    <title>Campus Club Activity Sharing Platform‍</title>
+    <!-- Link to external CSS files (Bootstrap + Custom Styles) -->
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="CSS/custom-style.css">
+    
+    <!-- JS Files (注意顺序：先jQuery，再Bootstrap，最后自定义JS) -->
+    <script type="text/javascript" src="JS/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="JS/bootstrap.js"></script>
+    <script type="text/javascript" src="JS/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="JS/app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="row align-items-start header-section">
+            <div class="col-2"></div>
+            <div class="col-8" style="text-align: center;">
+                <h3>Campus Club Activity Sharing Platform</h3>
+                <h8>🏀⚽🏃🏓</h8>
+                <p class="header-description">A platform for campus clubs to share activities</p>
+            </div>
+            <div class="col-2"></div>
+        </div>
+
+        <!-- Upload Section (Admin Only, Default Hidden) -->
+        <div class="row align-items-start" id="uploadSection">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <p>Add Media (Admin Only)</p>
+                <form style="font-size: 10pt;" id="newAssetForm">
+                    <div class="mb-3">
+                        <label for="FileName" class="form-label">File Name</label>
+                        <input type="text" class="form-control" id="FileName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="userID" class="form-label">Time OF Activity</label>
+                        <input type="text" class="form-control" id="userID" placeholder="e.g. 2026.1.1 16:00 A.M.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">User Name</label>
+                        <input type="text" class="form-control" id="userName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="UpFile" class="form-label">File to Upload</label>
+                        <input type="file" class="form-control" id="UpFile" accept="image/*, video/*">
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityName" class="form-label">Activity Name</label>
+                        <input type="text" class="form-control" id="activityName" placeholder="e.g. Club Recruitment">
+                    </div>
+                    <div class="mb-3">
+                        <label for="clubName" class="form-label">Club Name</label>
+                        <input type="text" class="form-control" id="clubName" placeholder="e.g. Computer Association">
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityDescription" class="form-label">Activity Description</label>
+                        <textarea class="form-control" id="activityDescription" rows="2" placeholder="e.g. New semester recruitment for freshmen"></textarea>
+                    </div>
+                    <!-- Button group -->
+                    <div class="button-group">
+                        <button type="button" id="subNewForm" class="btn btn-primary">Submit</button>
+                        <button type="button" id="adminLogoutBtn" class="btn btn-danger">Logout</button>
+                    </div>
+                    <br/><br/>
+                </form>
+            </div>
+            <div class="col-2"></div>
+        </div>
+
+        <!-- View Asset Area (All Users) -->
+        <div class="row align-items-start">
+            <div class="col-2"></div>
+            <div class="col-8 view-asset-area">
+                <div class="control-bar">
+                    <button id="retImages" type="button" class="btn btn-primary">View All Activities</button>
+                    <input type="text" id="searchInput" class="form-control" style="width: auto; max-width: 300px;" placeholder="Search by Activity/Club">
+                    <button id="searchBtn" type="button" class="btn btn-secondary">Search</button>
+                </div>
+                <div id="ImageList">
+                    <h4>Click "View All Activities" to show all activities, or use search to filter.</h4>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+
+        <!-- Admin Login Section (Bottom) -->
+        <div class="row align-items-start" id="adminLoginSection">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <p>Admin Login (Upload Only for Admins)</p>
+                <div class="mb-3 d-inline-block me-3" style="width: 200px;">
+                    <label for="adminUsername" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="adminUsername" placeholder="Admin Username">
+                </div>
+                <div class="mb-3 d-inline-block me-3" style="width: 200px;">
+                    <label for="adminPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="adminPassword" placeholder="Admin Password">
+                </div>
+                <button type="button" id="adminLoginBtn" class="btn btn-secondary">Login</button>
+                <span id="loginError" style="color: red; margin-left: 10px; font-size: 12px;"></span>
+            </div>
+            <div class="col-2"></div>
+        </div>
+
+        <!-- 活动详情模态框 -->
+        <div class="modal fade" id="activityDetailModal" tabindex="-1" aria-labelledby="activityDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="activityDetailModalLabel">Activity Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>File Name:</strong> <span id="detailFileName"></span></p>
+                        <p><strong>Uploaded by:</strong> <span id="detailUploader"></span></p>
+                        <p><strong>Activity Name:</strong> <span id="detailActivity"></span></p>
+                        <p><strong>Club Name:</strong> <span id="detailClub"></span></p>
+                        <p><strong>Time of Activity:</strong> <span id="detailUserID"></span></p>
+                        <p><strong>Description:</strong> <span id="detailDesc"></span></p>
+                        <p><strong>View File:</strong> <a id="detailFileLink" href="" target="_blank" class="text-primary">Open File</a></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动修改模态框（核心修复：新增隐藏字段传递userName和fileName） -->
+        <div class="modal fade" id="activityEditModal" tabindex="-1" aria-labelledby="activityEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="activityEditModalLabel">Edit Activity</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 隐藏字段：传递Logic App必需的字段（避免缺失报错） -->
+                        <input type="hidden" id="editDocId"> <!-- 文档ID（必传） -->
+                        <input type="hidden" id="editUserName"> <!-- 用户名（Logic App依赖） -->
+                        <input type="hidden" id="editFileName"> <!-- 文件名（Logic App依赖） -->
+                        
+                        <!-- 可修改字段（与上传表单一致） -->
+                        <div class="mb-3">
+                            <label for="editActivityName" class="form-label">Activity Name</label>
+                            <input type="text" class="form-control" id="editActivityName" placeholder="e.g. Club Recruitment">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editClubName" class="form-label">Club Name</label>
+                            <input type="text" class="form-control" id="editClubName" placeholder="e.g. Computer Association">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserID" class="form-label">Time of Activity</label>
+                            <input type="text" class="form-control" id="editUserID" placeholder="e.g. 2026.1.1 16:00 A.M.">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editActivityDescription" class="form-label">Activity Description</label>
+                            <textarea class="form-control" id="editActivityDescription" rows="2" placeholder="e.g. New semester recruitment for freshmen"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="submitEditBtn">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
